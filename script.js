@@ -11,16 +11,15 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// Adjustments for balls: size increase and pastel color range
 const balls = [];
-const gravity = 0.2; // Gravity effect
-const colorChangeSpeed = 0.01; // Speed for color transition
+const gravity = 0.2;
+const colorChangeSpeed = 0.01;
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
     balls.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: (15 + Math.random() * 20) * 1.3, // Increase ball size by 130%
+        radius: 35 + Math.random() * 20,
         colorHue: Math.random() * 360,
         dx: Math.random() * 2 - 1,
         dy: Math.random() * 2 - 1
@@ -31,18 +30,15 @@ function animateBalls() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     balls.forEach(ball => {
-        // Set pastel color by reducing saturation and lightness
         ball.colorHue = (ball.colorHue + colorChangeSpeed) % 360;
         const color = `hsl(${ball.colorHue}, 70%, 85%)`;
 
-        // Draw ball
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
         ctx.closePath();
 
-        // Continuous bounce
         if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
             ball.dy = -ball.dy;
         }
@@ -50,7 +46,6 @@ function animateBalls() {
             ball.dx = -ball.dx;
         }
 
-        // Move ball
         ball.x += ball.dx;
         ball.y += ball.dy;
     });
@@ -58,3 +53,58 @@ function animateBalls() {
 }
 
 animateBalls();
+
+// Selection and Download Logic
+let selectingMode = false;
+let selectedPhotos = [];
+
+// Start photo selection mode
+function startSelection() {
+    selectingMode = true;
+    selectedPhotos = [];
+
+    document.getElementById("downloadBtn").style.display = "none";
+    document.getElementById("confirmBtn").style.display = "block";
+    document.getElementById("cancelBtn").style.display = "block";
+
+    document.querySelectorAll(".photo").forEach(photo => {
+        photo.classList.add("selectable");
+        photo.onclick = () => selectPhoto(photo);
+    });
+}
+
+// Select or Deselect a photo
+function selectPhoto(photo) {
+    if (selectingMode) {
+        const index = selectedPhotos.indexOf(photo);
+
+        if (index > -1) {
+            selectedPhotos.splice(index, 1);
+            photo.classList.remove("selected");
+        } else {
+            selectedPhotos.push(photo);
+            photo.classList.add("selected");
+        }
+    }
+}
+
+// Confirm download
+function confirmDownload() {
+    if (selectedPhotos.length === 0) {
+        alert("No photos selected.");
+        return;
+    }
+
+    selectedPhotos.forEach(photo => {
+        const link = document.createElement("a");
+        link.href = photo.src;
+        link.download = photo.alt || "download";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    });
+
+    cancelSelection();
+}
+
+//
