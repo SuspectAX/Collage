@@ -54,7 +54,6 @@ function animateBalls() {
 
 animateBalls();
 
-// Selection and Download Logic
 let selectingMode = false;
 let selectedPhotos = [];
 
@@ -104,7 +103,22 @@ function confirmDownload() {
         document.body.removeChild(link);
     });
 
+    // Reset to download button
     cancelSelection();
 }
 
-//
+// Cancel selection
+function cancelSelection() {
+    selectingMode = false;
+    selectedPhotos = [];
+
+    document.getElementById("downloadBtn").style.display = "block";
+    document.getElementById("confirmBtn").style.display = "none";
+    document.getElementById("cancelBtn").style.display = "none";
+
+    document.querySelectorAll(".photo").forEach(photo => {
+        photo.classList.remove("selectable");
+        photo.classList.remove("selected");
+        photo.onclick = null; // Reset click handler
+    });
+}
