@@ -15,11 +15,11 @@ const balls = [];
 const gravity = 0.2;
 const colorChangeSpeed = 0.01;
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 12; i++) {
     balls.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: 35 + Math.random() * 20,
+        radius: 25 + Math.random() * 13,
         colorHue: Math.random() * 360,
         dx: Math.random() * 2 - 1,
         dy: Math.random() * 2 - 1
