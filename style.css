@@ -3,15 +3,16 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  body {
+}
+
+body {
     font-family: Arial, sans-serif;
     background-color: #333;
-    overflow-y: auto; /* Allows scrolling */
-  }
-  
-  .background {
+    overflow-y: auto;
+}
+
+/* Background Styles */
+.background {
     position: fixed;
     top: 0;
     left: 0;
@@ -20,74 +21,113 @@
     background: url('PR1.jpg') no-repeat center center/cover;
     filter: blur(10px);
     z-index: -1;
-  }
-  
-  /* Title Styling */
-  .title {
+}
+
+/* Title Styling */
+.title {
     font-size: 2em;
     color: #fff;
     text-align: center;
     margin: 20px 0;
     z-index: 2;
-    width: 100%;
-  }
-  
-  /* Collage Container Styling */
-  .collage {
+}
+
+/* Side Button Styling */
+.side-button {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+}
+
+.side-button button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.side-button button:hover {
+    background-color: #0056b3;
+}
+
+/* Collage Container Styling */
+.collage {
     display: grid;
     gap: 10px;
     padding: 10px;
     width: 90vw;
     max-width: 1200px;
-    margin: 0 auto; /* Center the collage */
+    margin: 0 auto;
     z-index: 2;
-  }
-  
-  /* Responsive Grid Layout */
-  @media (max-width: 768px) {
+}
+
+/* Responsive Grid Layout */
+@media (max-width: 768px) {
     .collage {
-      grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
     }
-  }
-  
-  @media (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
     .collage {
-      grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
-  }
-  
-  @media (min-width: 1025px) {
+}
+
+@media (min-width: 1025px) {
     .collage {
-      grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
-  }
-  
-  /* Image Styling */
-  .photo {
+}
+
+/* Photo Styling */
+.photo-container {
+    position: relative;
+}
+
+.photo {
     width: 100%;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  
-  .photo:hover {
+}
+
+/* Hover effect for enlargement */
+.photo:hover {
     transform: scale(1.7);
-    z-index: 3;
+    z-index: 4;
+    position: relative;
     filter: brightness(1.2);
-  }
-  
-  /* Shrink effect on other images when one is hovered */
-  .collage:hover .photo:not(:hover) {
+}
+
+.collage:hover .photo:not(:hover) {
     transform: scale(0.9);
     opacity: 0.65;
-  }
-  
+}
+
+/* Selected Photo Styling */
+.selected {
+    opacity: 0.5;
+    border: 2px solid #007bff;
+}
+
+/* Canvas for Bouncing Balls */
 #backgroundCanvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Make sure it stays behind everything */
+    z-index: -1;
+    pointer-events: none;
 }
