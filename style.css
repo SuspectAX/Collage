@@ -104,7 +104,7 @@ body {
 
 /* Hover effect for enlargement */
 .photo:hover {
-    transform: scale(1.7);
+    transform: scale(1.6);
     z-index: 4;
     position: relative;
     filter: brightness(1.2);
@@ -112,12 +112,12 @@ body {
 
 .collage:hover .photo:not(:hover) {
     transform: scale(0.9);
-    opacity: 0.65;
+    opacity: 0.80;
 }
 
 /* Selected Photo Styling */
 .selected {
-    opacity: 0.5;
+    opacity: 0.65;
     border: 2px solid #007bff;
 }
 
